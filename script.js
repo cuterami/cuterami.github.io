@@ -22,9 +22,21 @@ const quizData = [
     answer: [0, 1],
   },
   {
-    question: "✈️ 명이랑 함이랑 앞으로 가기로 한 나라가 아닌 곳은?",
+    question:
+      '✈️ 명이랑 함이랑 앞으로 가기로 한 나라가 <span class="underline">아닌</span> 곳은?',
     choices: ["🇻🇳 베트남", "🇯🇵 일본", "🇨🇳 중국", "🇦🇪 두바이"],
     answer: [2],
+  },
+  {
+    question:
+      '🥰 함이랑 명이가 맨날 하는 말이 <span class="underline">아닌</span> 것은?',
+    choices: ["사랑해", "보고싶어", "우리 언제봐?", "헤어져"],
+    answer: [3],
+  },{
+    question:
+      '😢 명이가 지금 걱정하는 것이 <span class="underline">아닌</span> 것은?',
+    choices: ["리액션 고장날까봐", "혹시 실망할까봐", "인스타에 자랑 못할까봐", "함이가 다른사람 만날까봐"],
+    answer: [3],
   },
   {
     question: "💖 명이는 함이를 얼만큼 사랑할까?",
@@ -93,7 +105,7 @@ nextBtn.addEventListener("click", nextQuestion);
 
 function showQuestion() {
   const q = quizData[currentQuestion];
-  questionEl.textContent = q.question;
+  questionEl.innerHTML = q.question;
   choicesEl.innerHTML = "";
   nextBtn.disabled = true;
 

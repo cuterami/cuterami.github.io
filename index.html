@@ -3,40 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>생일 축하 퀴즈</title>
+    <title>🎂 생일 축하합니다 🎉</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <audio
-      id="bgm"
-      src="assets/music/bgm.mp3"
-      type="audio/mpeg"
-      loop
-      preload="auto"
-    ></audio>
+    <audio id="bgm" loop preload="auto">
+      <source src="assets/music/bgm.mp3" type="audio/mpeg" />
+    </audio>
 
     <div id="letter-container">
-      <div id="letter">
-        <p>친구에게 온 편지 💌</p>
-        <button id="open-letter">편지 열기</button>
-      </div>
+      <p class="emoji-title">💌 31번째 생일을 축하해 💌</p>
+      <br />
+      <p class="fade-line">몇 가지 질문에 대답하면</p>
+      <p class="fade-line">게임을 다운받을 수 있어.</p>
+      <br />
+      <p class="fade-line">아래 버튼을 누르면 음악이 재생되니까</p>
+      <p class="fade-line">소리 꼭 키고 진행해줘!!</p>
+      <br />
+      <button id="open-letter" class="fade-line">✨ 편지 열기 ✨</button>
     </div>
 
     <div id="quiz-container" class="hidden">
       <div id="question-box">
-        <p id="question"></p>
+        <p id="question" class="emoji-question">❓</p>
         <div id="choices"></div>
-        <p id="timer">⏱ 남은 시간: <span id="time">10</span>초</p>
-        <button id="next-btn" disabled>다음</button>
+        <p id="timer">⏱ 남은 시간: <span id="time">30</span>초</p>
+        <button id="next-btn" disabled>👉 다음 문제 👉</button>
       </div>
     </div>
 
     <div id="result-container" class="hidden">
-      <h2>퀴즈 결과 🎉</h2>
-      <p id="score"></p>
-      <p id="message"></p>
+      <h2 class="emoji-title">🎊 퀴즈 결과 🎊</h2>
+      <p id="score" class="emoji-score"></p>
+      <p id="message" class="emoji-msg"></p>
+      <div id="confetti"></div>
     </div>
 
     <script src="script.js"></script>
+    <script>
+      // 순차 Fade-In 효과
+      window.addEventListener("DOMContentLoaded", () => {
+        const lines = document.querySelectorAll(".fade-line");
+        lines.forEach((line, index) => {
+          setTimeout(() => {
+            line.classList.add("visible");
+          }, index * 700);
+        });
+      });
+    </script>
   </body>
 </html>

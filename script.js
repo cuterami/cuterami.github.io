@@ -12,39 +12,43 @@ const bgm = document.getElementById("bgm");
 
 let currentQuestion = 0;
 let score = 0;
-let timer;
-let timeLeft = 10;
+let quizTimer;
+let timeLeft = 30;
 
 const quizData = [
   {
-    question: "친구가 제일 좋아하는 색깔은?",
-    choices: ["파랑", "노랑", "분홍", "초록"],
-    answer: 2,
+    question: "🫶🏻 명이가 가장 사랑하는 사람은?",
+    choices: ["🐱 함이", "🐽 멍청이", "👱🏻‍♀️ 아이유", "👩🏻‍🦰 경리"],
+    answer: [0, 1],
   },
   {
-    question: "친구가 가장 좋아하는 음식은?",
-    choices: ["떡볶이", "피자", "초밥", "치킨"],
-    answer: 0,
+    question: "✈️ 명이랑 함이랑 앞으로 가기로 한 나라가 아닌 곳은?",
+    choices: ["🇻🇳 베트남", "🇯🇵 일본", "🇨🇳 중국", "🇦🇪 두바이"],
+    answer: [2],
   },
   {
-    question: "친구의 생일은 언제일까?",
-    choices: ["3월 1일", "4월 10일", "5월 5일", "12월 25일"],
-    answer: 1,
+    question: "💖 명이는 함이를 얼만큼 사랑할까?",
+    choices: [
+      "절대 헤어지고 싶지 않을만큼",
+      "뗄레야 뗄 수 없게",
+      "항상 생각나고 보고싶을 만큼",
+      "아프면 대신 아프고 싶을 만큼",
+    ],
+    answer: [0, 1, 2, 3],
   },
 ];
 
 openLetterBtn.addEventListener("click", () => {
   letterContainer.classList.add("hidden");
   quizContainer.classList.remove("hidden");
-
   playBGM();
+  startQuizTimer();
   showQuestion();
 });
 
 function playBGM() {
   if (bgm.paused) {
-    bgm.play().catch((e) => {
-      console.log("BGM 재생 실패:", e);
+    bgm.play().catch(() => {
       const resumeAudio = () => {
         bgm.play();
         document.body.removeEventListener("click", resumeAudio);
@@ -54,23 +58,44 @@ function playBGM() {
   }
 }
 
-nextBtn.addEventListener("click", () => {
-  clearInterval(timer);
+function startQuizTimer() {
+  timeLeft = 30;
+  timerEl.textContent = timeLeft;
+  quizTimer = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(quizTimer);
+      resetToStart();
+    }
+  }, 1000);
+}
+
+function resetToStart() {
+  currentQuestion = 0;
+  score = 0;
+  quizContainer.classList.add("hidden");
+  resultContainer.classList.add("hidden");
+  letterContainer.classList.remove("hidden");
+}
+
+function nextQuestion() {
   currentQuestion++;
   if (currentQuestion < quizData.length) {
     showQuestion();
   } else {
+    clearInterval(quizTimer);
     showResult();
   }
-});
+}
+
+nextBtn.addEventListener("click", nextQuestion);
 
 function showQuestion() {
   const q = quizData[currentQuestion];
   questionEl.textContent = q.question;
   choicesEl.innerHTML = "";
   nextBtn.disabled = true;
-  timeLeft = 10;
-  timerEl.textContent = timeLeft;
 
   q.choices.forEach((choice, index) => {
     const btn = document.createElement("button");
@@ -78,12 +103,12 @@ function showQuestion() {
     btn.addEventListener("click", () => handleAnswer(btn, index));
     choicesEl.appendChild(btn);
   });
-
-  startTimer();
 }
 
 function handleAnswer(btn, selectedIndex) {
-  if (selectedIndex === quizData[currentQuestion].answer) {
+  const correctAnswers = quizData[currentQuestion].answer;
+
+  if (correctAnswers.includes(selectedIndex)) {
     score++;
   }
 
@@ -91,34 +116,33 @@ function handleAnswer(btn, selectedIndex) {
     .querySelectorAll("#choices button")
     .forEach((b) => (b.disabled = true));
   btn.classList.add("choice-selected");
-
   nextBtn.disabled = false;
-  clearInterval(timer);
 }
 
 function showResult() {
   quizContainer.classList.add("hidden");
   resultContainer.classList.remove("hidden");
-  scoreEl.textContent = `당신의 점수는 ${score}/${quizData.length}입니다!`;
+  scoreEl.textContent = `📊 너의 점수는 ${score}/${quizData.length}점이야!`;
 
   let msg = "";
-  if (score === quizData.length) msg = "완벽해! 진짜 찐친이야 🎉";
-  else if (score >= 2) msg = "잘했어! 꽤 가까운 친구야 😊";
-  else msg = "ㅋㅋ 조금 더 알아가보자~ 그래도 진심은 전달됐어 💕";
+  if (score === quizData.length)
+    msg = "💯 축하해! 명이가 낸 문제를 다 맞췄어!! 🎉🎀";
+  else if (score >= 2) msg = "👏 분발하도록 해 ^^ 명이의 진심을 알려면... 😊✨";
+  else msg = "😅 나를 정말 모르는구나 💕";
 
   messageEl.textContent = msg;
+  triggerConfetti();
 }
 
-function startTimer() {
-  timer = setInterval(() => {
-    timeLeft--;
-    timerEl.textContent = timeLeft;
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      nextBtn.disabled = false;
-      document
-        .querySelectorAll("#choices button")
-        .forEach((b) => (b.disabled = true));
-    }
-  }, 1000);
+function triggerConfetti() {
+  const confettiContainer = document.getElementById("confetti");
+  confettiContainer.innerHTML = "";
+
+  for (let i = 0; i < 100; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * 100 + "%";
+    confetti.style.animationDelay = Math.random() + "s";
+    confettiContainer.appendChild(confetti);
+  }
 }

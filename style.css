@@ -1,95 +1,126 @@
-/* 전체 배경 및 기본 텍스트 설정 */
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #fff6f0;
-  margin: 0;
-  padding: 30px;
-  text-align: center;
-  color: #333;
-}
-
-/* 공통 컨테이너 스타일 */
-#letter-container,
-#quiz-container,
-#result-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-/* 편지 영역 */
-#letter {
-  font-size: 1.3em;
-}
-
-/* 버튼 스타일 공통 */
-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
-  font-size: 16px;
-  border: none;
-  border-radius: 12px;
-  background-color: #ffb6c1;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background-color: #ff7f9c;
-  transform: scale(1.03);
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* 숨김 클래스 */
-.hidden {
-  display: none;
-}
-
-/* 선택지 버튼 정렬 */
-#choices button {
-  display: block;
-  margin: 12px auto;
-  width: 80%;
-  max-width: 400px;
-  padding: 12px;
-  font-size: 16px;
-}
-
-/* 정답 선택 시 색상 강조 */
-.choice-selected {
-  background-color: #ff69b4 !important;
-}
-
-/* 결과 텍스트 스타일 */
-#result-container h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
-#score {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-#message {
-  font-size: 18px;
-  color: #ff69b4;
-  margin-top: 10px;
-}
-
-/* 타이머 스타일 */
-#timer {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-}
+@font-face {
+    font-family: "MyPixelFont";
+    src: url("assets/fonts/RetroPixel.ttf") format("truetype");
+  }
+  
+  body {
+    font-family: "MyPixelFont", sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 30px;
+    text-align: center;
+    overflow-x: hidden;
+  }
+  
+  .emoji-title {
+    color: #000 !important;
+    background: none;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .emoji-question,
+  .emoji-score,
+  .emoji-msg {
+    background: none;
+  }
+  
+  /* Fade-In 한 줄씩 등장 효과 */
+  .fade-line {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .fade-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* 기본 박스 스타일 */
+  #letter-container,
+  #quiz-container,
+  #result-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: 4px dashed #000;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 16px 28px;
+    font-size: 14px;
+    border: 3px solid #000;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #000;
+    color: #fff;
+    transform: scale(1.05);
+  }
+  
+  button:disabled {
+    background-color: #ddd;
+    color: #999;
+    border-color: #bbb;
+    cursor: not-allowed;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  #choices button {
+    display: block;
+    margin: 15px auto;
+    width: 85%;
+    max-width: 500px;
+    padding: 14px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #000;
+    border: 3px solid #000;
+    font-family: "MyPixelFont", sans-serif;
+  }
+  
+  .choice-selected {
+    background-color: #ddd !important;
+    color: #000;
+    border-color: #000;
+  }
+  
+  #timer {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .confetti {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+    opacity: 0.9;
+    animation: confettiFall 3s ease-in forwards;
+  }
+  
+  @keyframes confettiFall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  

@@ -1,0 +1,95 @@
+/* 전체 배경 및 기본 텍스트 설정 */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #fff6f0;
+  margin: 0;
+  padding: 30px;
+  text-align: center;
+  color: #333;
+}
+
+/* 공통 컨테이너 스타일 */
+#letter-container,
+#quiz-container,
+#result-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 편지 영역 */
+#letter {
+  font-size: 1.3em;
+}
+
+/* 버튼 스타일 공통 */
+button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  background-color: #ffb6c1;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #ff7f9c;
+  transform: scale(1.03);
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* 숨김 클래스 */
+.hidden {
+  display: none;
+}
+
+/* 선택지 버튼 정렬 */
+#choices button {
+  display: block;
+  margin: 12px auto;
+  width: 80%;
+  max-width: 400px;
+  padding: 12px;
+  font-size: 16px;
+}
+
+/* 정답 선택 시 색상 강조 */
+.choice-selected {
+  background-color: #ff69b4 !important;
+}
+
+/* 결과 텍스트 스타일 */
+#result-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+#score {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#message {
+  font-size: 18px;
+  color: #ff69b4;
+  margin-top: 10px;
+}
+
+/* 타이머 스타일 */
+#timer {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}

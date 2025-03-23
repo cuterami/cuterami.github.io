@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>생일 축하 퀴즈</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <audio
+      id="bgm"
+      src="assets/music/bgm.mp3"
+      type="audio/mpeg"
+      loop
+      preload="auto"
+    ></audio>
+
+    <div id="letter-container">
+      <div id="letter">
+        <p>친구에게 온 편지 💌</p>
+        <button id="open-letter">편지 열기</button>
+      </div>
+    </div>
+
+    <div id="quiz-container" class="hidden">
+      <div id="question-box">
+        <p id="question"></p>
+        <div id="choices"></div>
+        <p id="timer">⏱ 남은 시간: <span id="time">10</span>초</p>
+        <button id="next-btn" disabled>다음</button>
+      </div>
+    </div>
+
+    <div id="result-container" class="hidden">
+      <h2>퀴즈 결과 🎉</h2>
+      <p id="score"></p>
+      <p id="message"></p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -37,6 +37,21 @@
       <p id="score" class="emoji-score"></p>
       <p id="message" class="emoji-msg"></p>
       <div id="confetti"></div>
+
+      <!-- ✅ ✅ ✅ result-container 내부에 있어야 작동함 -->
+      <div id="download-link" class="hidden">
+        <p>🎁 아래에서 선물을 다운로드 해줘!</p>
+        <a
+          href="https://example.com/download"
+          target="_blank"
+          class="download-btn"
+          >📥 게임 다운로드</a
+        >
+      </div>
+
+      <div id="restart-button" class="hidden">
+        <button id="restart-btn">🔁 처음으로 돌아가기</button>
+      </div>
     </div>
 
     <script src="script.js"></script>
@@ -47,8 +62,16 @@
         lines.forEach((line, index) => {
           setTimeout(() => {
             line.classList.add("visible");
-          }, index * 700);
+          }, index * 500);
         });
+
+        // 처음으로 돌아가기 버튼 이벤트 연결도 여기서
+        const restartBtn = document.getElementById("restart-btn");
+        if (restartBtn) {
+          restartBtn.addEventListener("click", () => {
+            location.reload(); // 간단하게 새로고침으로 돌아가기 처리
+          });
+        }
       });
     </script>
   </body>

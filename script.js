@@ -125,11 +125,22 @@ function showResult() {
   scoreEl.textContent = `📊 너의 점수는 ${score}/${quizData.length}점이야!`;
 
   let msg = "";
-  if (score === quizData.length)
+
+  if (score === quizData.length) {
     msg = "💯 축하해! 명이가 낸 문제를 다 맞췄어!! 🎉🎀";
-  else if (score >= 2)
-    msg = "👏 분발하도록 해 ^^ 명이의 진심을 알려면...! 😊✨";
-  else msg = "😅 나를 정말 모르는구나 💕";
+    document.getElementById("download-link").classList.remove("hidden");
+    document.getElementById("restart-button").classList.add("hidden");
+  } else {
+    msg = "😅 함이는 아직 나를 정말 모르는구나 💕";
+    document.getElementById("download-link").classList.add("hidden");
+    document.getElementById("restart-button").classList.remove("hidden");
+
+    // ✅ 여기서 다시 이벤트 연결 (최종 보장)
+    const restartBtn = document.getElementById("restart-btn");
+    restartBtn.onclick = () => {
+      resetToStart(); // 또는 location.reload()도 가능
+    };
+  }
 
   messageEl.textContent = msg;
   triggerConfetti();
@@ -147,3 +158,19 @@ function triggerConfetti() {
     confettiContainer.appendChild(confetti);
   }
 }
+
+// ✅ [수정 포인트] 처음으로 돌아가기 버튼은 DOMContentLoaded 이후 바인딩
+window.addEventListener("DOMContentLoaded", () => {
+  const restartBtn = document.getElementById("restart-btn");
+  if (restartBtn) {
+    restartBtn.addEventListener("click", resetToStart);
+  }
+
+  // 기존 Fade-in 효과도 이 안에 같이 둬도 됨
+  const lines = document.querySelectorAll(".fade-line");
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      line.classList.add("visible");
+    }, index * 500);
+  });
+});

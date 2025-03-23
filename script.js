@@ -13,7 +13,7 @@ const bgm = document.getElementById("bgm");
 let currentQuestion = 0;
 let score = 0;
 let quizTimer;
-let timeLeft = 30;
+let timeLeft = 60;
 
 const quizData = [
   {

@@ -14,6 +14,7 @@ let currentQuestion = 0;
 let score = 0;
 let quizTimer;
 let timeLeft = 60;
+let selectedIndex = null;
 
 const quizData = [
   {
@@ -87,7 +88,7 @@ function playBGM() {
 }
 
 function startQuizTimer() {
-  timeLeft = 30;
+  timeLeft = 60;
   timerEl.textContent = timeLeft;
   quizTimer = setInterval(() => {
     timeLeft--;
@@ -108,6 +109,12 @@ function resetToStart() {
 }
 
 function nextQuestion() {
+  const correctAnswers = quizData[currentQuestion].answer;
+  if (selectedIndex !== null && correctAnswers.includes(selectedIndex)) {
+    score++;
+  }
+
+  selectedIndex = null; // 다음 문제 위해 초기화
   currentQuestion++;
   if (currentQuestion < quizData.length) {
     showQuestion();
@@ -133,16 +140,13 @@ function showQuestion() {
   });
 }
 
-function handleAnswer(btn, selectedIndex) {
-  const correctAnswers = quizData[currentQuestion].answer;
+function handleAnswer(btn, index) {
+  selectedIndex = index;
 
-  if (correctAnswers.includes(selectedIndex)) {
-    score++;
-  }
+  document.querySelectorAll("#choices button").forEach((b) => {
+    b.classList.remove("choice-selected");
+  });
 
-  document
-    .querySelectorAll("#choices button")
-    .forEach((b) => (b.disabled = true));
   btn.classList.add("choice-selected");
   nextBtn.disabled = false;
 }
@@ -157,6 +161,7 @@ function showResult() {
   if (score === quizData.length) {
     msg = "💯 축하해! 명이가 낸 문제를 다 맞췄어!! 🎉🎀";
     document.getElementById("download-link").classList.remove("hidden");
+    startCountdown();
     document.getElementById("restart-button").classList.add("hidden");
   } else {
     msg = "😅 함이는 아직 나를 정말 모르는구나 💕";
@@ -187,14 +192,13 @@ function triggerConfetti() {
   }
 }
 
-// ✅ [수정 포인트] 처음으로 돌아가기 버튼은 DOMContentLoaded 이후 바인딩
+// ✅ 처음으로 돌아가기 버튼 이벤트 연결
 window.addEventListener("DOMContentLoaded", () => {
   const restartBtn = document.getElementById("restart-btn");
   if (restartBtn) {
     restartBtn.addEventListener("click", resetToStart);
   }
 
-  // 기존 Fade-in 효과도 이 안에 같이 둬도 됨
   const lines = document.querySelectorAll(".fade-line");
   lines.forEach((line, index) => {
     setTimeout(() => {
@@ -202,3 +206,26 @@ window.addEventListener("DOMContentLoaded", () => {
     }, index * 500);
   });
 });
+
+function startCountdown() {
+  const target = new Date("2025-03-29T00:00:00").getTime();
+  const timerEl = document.getElementById("countdown-timer");
+
+  const countdownInterval = setInterval(() => {
+    const now = new Date().getTime();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      clearInterval(countdownInterval);
+      timerEl.textContent = "🎉 티저가 공개되었습니다!";
+      return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    timerEl.textContent = `⏳ ${d}일 ${h}시간 ${m}분 ${s}초 남음`;
+  }, 1000);
+}

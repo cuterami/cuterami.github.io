@@ -147,3 +147,9 @@ button:disabled {
   padding: 3px 3px;
   border-radius: 10px;
 }
+
+#countdown-timer {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
